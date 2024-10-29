@@ -18,31 +18,40 @@ def main():
         choice = input("Выберите действие: ")
 
         if choice == '1':
-            with counter:
-                name = input("Введите имя животного: ")
-                birth_date = input("Введите дату рождения животного (YYYY-MM-DD): ")
-                animal_type = input("Введите тип животного (Dog, Cat, Hamster, Horse, Camel, Donkey): ")
-                commands = input("Введите команды, которые выполняет животное (через запятую): ").split(',')
+            try:
+                with counter:
+                    name = input("Введите имя животного: ")
+                    birth_date = input("Введите дату рождения животного (YYYY-MM-DD): ")
+                    animal_type = input("Введите тип животного (Dog, Cat, Hamster, Horse, Camel, Donkey): ")
+                    commands = input("Введите команды, которые выполняет животное (через запятую): ").split(',')
 
-                if animal_type == 'Dog':
-                    animal = Dog(name, birth_date, commands)
-                elif animal_type == 'Cat':
-                    animal = Cat(name, birth_date, commands)
-                elif animal_type == 'Hamster':
-                    animal = Hamster(name, birth_date, commands)
-                elif animal_type == 'Horse':
-                    animal = Horse(name, birth_date, commands)
-                elif animal_type == 'Camel':
-                    animal = Camel(name, birth_date, commands)
-                elif animal_type == 'Donkey':
-                    animal = Donkey(name, birth_date, commands)
-                else:
-                    print("Неверный тип животного")
-                    continue
+                    if not name or not birth_date or not animal_type or not commands:
+                        raise ValueError("Все поля должны быть заполнены")
 
-                registry.add_animal(animal)
-                counter.add()
-                print(f"Животное {name} добавлено в реестр.")
+                    if animal_type == 'Dog':
+                        animal = Dog(name, birth_date, commands)
+                    elif animal_type == 'Cat':
+                        animal = Cat(name, birth_date, commands)
+                    elif animal_type == 'Hamster':
+                        animal = Hamster(name, birth_date, commands)
+                    elif animal_type == 'Horse':
+                        animal = Horse(name, birth_date, commands)
+                    elif animal_type == 'Camel':
+                        animal = Camel(name, birth_date, commands)
+                    elif animal_type == 'Donkey':
+                        animal = Donkey(name, birth_date, commands)
+                    else:
+                        print("Неверный тип животного")
+                        continue
+
+                    registry.add_animal(animal)
+                    counter.add()
+                    print(f"Животное {name} добавлено в реестр.")
+
+            except ValueError as e:
+                print(e)
+            except Exception as e:
+                print(f"Ошибка: {e}")
 
         elif choice == '2':
             name = input("Введите имя животного: ")
@@ -71,4 +80,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
